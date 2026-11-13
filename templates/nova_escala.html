@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>EscalaP1 — Nova Alocação de Serviço</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        *:focus-visible { outline: 3px solid #ff9900 !important; outline-offset: 2px !important; }
+        .btn-p1 { background-color: #0f294a; color: #fff; min-height: 48px; }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-dark" style="background-color: #0f294a;">
+        <div class="container"><span class="navbar-brand fw-bold">EscalaP1 — Gestão de Efetivo e Escalas</span></div>
+    </nav>
+    <main class="container my-4" style="max-width: 720px;">
+        <div class="card shadow-sm p-4">
+            <h1 class="h4 fw-bold mb-3">Alocação de Policial na Escala de Serviço</h1>
+            <form action="/escala/nova" method="POST">
+                <div class="mb-3">
+                    <label for="policial_id" class="form-label fw-bold">Policial Militar (RE / Posto / Nome de Guerra) *</label>
+                    <select id="policial_id" name="policial_id" class="form-select" style="min-height: 48px;" required>
+                        {% for p in policiais %}
+                        <option value="{{ p.id }}">{{ p.re }} — {{ p.posto_grad }} {{ p.nome_guerra }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="data_servico" class="form-label fw-bold">Data do Serviço *</label>
+                        <input type="date" id="data_servico" name="data_servico" class="form-control" style="min-height: 48px;" value="2026-11-20" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="turno" class="form-label fw-bold">Turno de Serviço *</label>
+                        <select id="turno" name="turno" class="form-select" style="min-height: 48px;" required>
+                            <option value="Diurno (06h-18h)">Diurno (06h00 às 18h00)</option>
+                            <option value="Noturno (18h-06h)">Noturno (18h00 às 06h00)</option>
+                            <option value="Administrativo (08h-17h)">Administrativo (08h00 às 17h00)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="viatura_posto" class="form-label fw-bold">Viatura ou Posto de Trabalho *</label>
+                    <input type="text" id="viatura_posto" name="viatura_posto" class="form-control" style="min-height: 48px;" placeholder="Ex: VTR M-14102 — Radiopatrulha" required>
+                </div>
+                <button type="submit" class="btn btn-p1 w-100 fw-bold">Validar e Alocar na Escala</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
