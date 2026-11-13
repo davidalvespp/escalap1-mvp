@@ -14,6 +14,13 @@
         <div class="container"><span class="navbar-brand fw-bold">EscalaP1 — Gestão de Efetivo e Escalas</span></div>
     </nav>
     <main class="container my-5" style="max-width: 480px;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} fw-bold" role="alert">
+                    ⚠️ {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
         <div class="card shadow-sm p-4">
             <h1 class="h4 fw-bold mb-3">Acesso Restrito — Seção P1</h1>
             <form action="/login" method="POST">
