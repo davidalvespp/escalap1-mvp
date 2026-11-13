@@ -82,8 +82,14 @@ def nova_escala():
 
         conn.close()
         return redirect(url_for("visualizar_escala", data=data_servico))
-
-    policiais = conn.execute("SELECT id, re, posto_grad, nome_guerra FROM Policial WHERE ativo = 1").fetchall()
+policiais = conn.execute(
+        """
+        SELECT p.id, p.re, p.posto_grad, p.nome_guerra, a.motivo AS afastamento_motivo
+        FROM Policial p
+        LEFT JOIN Afastamento a ON p.id = a.policial_id AND date('2026-11-20') BETWEEN a.data_inicio AND a.data_fim
+        WHERE p.ativo = 1
+        """
+    ).fetchall()
     conn.close()
     return render_template("nova_escala.html", policiais=policiais)
 
