@@ -11,17 +11,28 @@
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-dark" style="background-color: #0f294a;">
-        <div class="container"><span class="navbar-brand fw-bold">EscalaP1 — Gestão de Efetivo e Escalas</span></div>
+        <div class="container d-flex justify-content-between align-items-center">
+            <span class="navbar-brand fw-bold">EscalaP1 — Gestão de Efetivo e Escalas</span>
+            <div class="d-flex align-items-center gap-3 text-white">
+                <span class="small">Operador: <strong>{{ session.get('usuario_nome', 'Seção P1') }}</strong></span>
+                <a href="/logout" class="btn btn-outline-light btn-sm">Sair</a>
+            </div>
+        </div>
     </nav>
     <main class="container my-4" style="max-width: 720px;">
         <div class="card shadow-sm p-4">
-            <h1 class="h4 fw-bold mb-3">Alocação de Policial na Escala de Serviço</h1>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="h4 fw-bold mb-0">Alocação de Policial na Escala de Serviço</h1>
+                <a href="/escala/visualizar" class="btn btn-outline-primary btn-sm">Ver Grade Consolidada</a>
+            </div>
             <form action="/escala/nova" method="POST">
                 <div class="mb-3">
-                    <label for="policial_id" class="form-label fw-bold">Policial Militar (RE / Posto / Nome de Guerra) *</label>
+                    <label for="policial_id" class="form-label fw-bold">Policial Militar (RE / Posto / Nome de Guerra / Status) *</label>
                     <select id="policial_id" name="policial_id" class="form-select" style="min-height: 48px;" required>
                         {% for p in policiais %}
-                        <option value="{{ p.id }}">{{ p.re }} — {{ p.posto_grad }} {{ p.nome_guerra }}</option>
+                        <option value="{{ p.id }}">
+                            {{ p.re }} — {{ p.posto_grad }} {{ p.nome_guerra }} {% if p.afastamento_motivo %}[⚠️ AFASTADO: {{ p.afastamento_motivo }}]{% else %}[✅ APTO]{% endif %}
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
