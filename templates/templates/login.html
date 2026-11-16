@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white fw-bold">Acesso Restrito — Seção P1</div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="re_login" class="form-label">RE (Registro Estatístico)</label>
+                        <input type="text" class="form-control" id="re_login" name="re_login" value="145890-2" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="senha" class="form-label">Senha Funcional</label>
+                        <input type="password" class="form-control" id="senha" name="senha" value="admin123" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">Entrar no Sistema</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
