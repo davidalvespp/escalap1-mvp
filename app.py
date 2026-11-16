@@ -2,7 +2,7 @@ import os
 import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import check_password_hash
-from database import init_db, get_db_connection
+from database import init_db, get_connection
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "escalap1-chave-secreta-segura-2026")
@@ -58,7 +58,7 @@ def login():
     if request.method == "POST":
         re_login = request.form.get("re_login", "").strip()
         senha = request.form.get("senha", "")
-        conn = get_db_connection()
+        conn = get_connection()
         usuario = conn.execute("SELECT * FROM Usuario WHERE re_login = ?", (re_login,)).fetchone()
         conn.close()
 
@@ -85,7 +85,7 @@ def nova_escala():
     if "usuario_id" not in session:
         return redirect(url_for("login"))
 
-    conn = get_db_connection()
+    conn = get_connection()
 
     if request.method == "POST":
         policial_id = int(request.form.get("policial_id"))
@@ -128,7 +128,7 @@ def visualizar_escala():
     if "usuario_id" not in session:
         return redirect(url_for("login"))
 
-    conn = get_db_connection()
+    conn = get_connection()
     escalas = conn.execute(
         """
         SELECT e.id, e.data_servico, e.turno, e.viatura_posto,
@@ -140,6 +140,10 @@ def visualizar_escala():
     ).fetchall()
     conn.close()
     return render_template("visualizar_escala.html", escalas=escalas)
+
+
+if __name__ == "__main__":
+    app.run(debug=False)
 
 
 if __name__ == "__main__":
