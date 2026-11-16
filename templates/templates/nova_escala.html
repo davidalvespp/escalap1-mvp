@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white fw-bold">Lançamento de Escala Operacional</div>
+    <div class="card-body">
+        <form method="POST" class="row g-3">
+            <div class="col-md-6">
+                <label for="policial_id" class="form-label">Policial Militar (Status Prévio)</label>
+                <select class="form-select" id="policial_id" name="policial_id" required>
+                    {% for p in policiais %}
+                    <option value="{{ p['id'] }}">
+                        {{ p['posto_grad'] }} {{ p['nome_guerra'] }} (RE {{ p['re'] }}) —
+                        {% if p['afastamento_motivo'] %}[⚠️ AFASTADO: {{ p['afastamento_motivo'] }}]{% else %}[✅ APTO]{% endif %}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="data_servico" class="form-label">Data do Serviço</label>
+                <input type="date" class="form-control" id="data_servico" name="data_servico" value="2026-11-20" required>
+            </div>
+            <div class="col-md-3">
+                <label for="turno" class="form-label">Turno</label>
+                <select class="form-select" id="turno" name="turno" required>
+                    <option value="Diurno (06h-18h)">Diurno (06h-18h)</option>
+                    <option value="Noturno (18h-06h)">Noturno (18h-06h)</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                <label for="viatura_posto" class="form-label">Viatura / Posto de Serviço</label>
+                <input type="text" class="form-control" id="viatura_posto" name="viatura_posto" placeholder="Ex: M-11204 (Radiopatrulha)" required>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-success w-100 fw-bold">Validar e Escalar</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
